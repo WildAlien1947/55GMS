@@ -13,7 +13,8 @@ import { server as wisp, logging } from "@mercuryworkshop/wisp-js/server";
 const require = createRequire(import.meta.url);
 const { epoxyPath } = require("@mercuryworkshop/epoxy-transport");
 const { baremuxPath } = require("@mercuryworkshop/bare-mux/node");
-import { scramjetPath } from "@mercuryworkshop/scramjet/path";
+// const { scramjetPath } = require("@mercuryworkshop/scramjet/path");
+const scramjetPath = ""; // Placeholder
 
 logging.set_level(logging.ERROR);
 
@@ -38,7 +39,9 @@ try {
   const app = express();
   app.use("/epoxy/", express.static(epoxyPath));
   app.use("/baremux/", express.static(baremuxPath));
-  app.use("/scram/", express.static(scramjetPath));
+  if (scramjetPath) {
+    app.use("/scram/", express.static(scramjetPath));
+  }
   const server = createServer(app);
 
   const io = new SocketIO({
